@@ -17,7 +17,7 @@ from django.contrib import admin
 from django.urls import path
 from django.conf import settings
 from django.conf.urls.static import static
-from main_app.views import MainPage, HomePage, SignIn, SignUp, UpdateProfile, LOgOut
+from main_app.views import MainPage, HomePage, SignIn, SignUp, UpdateProfile, LogOut
 from vacancy.views import AllVacancy, CreateVacancy
 from resume.views import AllResume, CreateResume
 
@@ -26,7 +26,7 @@ urlpatterns = [
     path('', MainPage.as_view()),
     path('sign-in/', SignIn.as_view()),
     path('sign-up/', SignUp.as_view()),
-    path('log-out/', LOgOut.as_view()),
+    path('log-out/', LogOut.as_view()),
     path('home/', HomePage.as_view()),
     path('resume/', AllResume.as_view()),
     path('vacancy/', AllVacancy.as_view()),

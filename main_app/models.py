@@ -7,7 +7,7 @@ from django.contrib import admin
 #     employer = models.BooleanField()
 
 class Worker(models.Model):
-    age = models.DateField()
+    age = models.DateField(null=True)
     first_name = models.CharField(max_length=32)
     second_name = models.CharField(max_length=32)
     education = models.TextField(max_length=64)
@@ -15,7 +15,7 @@ class Worker(models.Model):
     country = models.CharField(max_length=32)
     city = models.CharField(max_length=32)
     e_mail = models.EmailField()
-    phone = models.IntegerField()
+    phone = models.IntegerField(null=True)
     account = models.ForeignKey(User, on_delete=models.CASCADE)
 
 

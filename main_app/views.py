@@ -32,12 +32,12 @@ class HomePage(View):
         if request.user.is_authenticated:
             if my_is_staff(request.user): # сделать свой класс пользователя, для выдачи работадателям
                 return render(request, 'main_app/home_page.html',
-                              context={'employer': True, 'data': Employer.objects.filter(account=request.user), 'vacancy': Vacancy.objects.filter(author=request.user)})
+                              context={"auth": True, 'employer': True, 'data': Employer.objects.filter(account=request.user), 'vacancy': Vacancy.objects.filter(author=request.user)})
             else:
                 return render(request, 'main_app/home_page.html',
-                              context={'employer': False, 'data': Worker.objects.filter(account=request.user), 'resume': Resume.objects.filter(author=request.user)})
+                              context={"auth": True, 'employer': False, 'data': Worker.objects.filter(account=request.user), 'resume': Resume.objects.filter(author=request.user)})
         else:
-            return render(request, 'main_app/home_page.html', context={'data': False})
+            return render(request, 'main_app/home_page.html', context={'auth': False})
 
     def post(self, request, *args, **kwargs):
         data = [request.POST.get('description'), request.POST.get('title')]
@@ -80,7 +80,7 @@ class SignUp(CreateView):
     template_name = 'main_app/signup.html'
 
 
-class LOgOut(View):
+class LogOut(View):
 
     def get(self, request, *args, **kwargs):
         if request.user.is_authenticated:
@@ -98,14 +98,37 @@ class UpdateProfile(View):
     def post(self, request, *args, **kwargs):
         if request.user.is_authenticated:
             my_dict = {key: value for key, value in request.POST.dict().items()}
+            del my_dict['csrfmiddlewaretoken']
             if my_is_staff(request.user):
-                my_obj = Employer(age=datetime.strptime(str(my_dict['age']), "%d.%m.%Y"), name=str(my_dict['name']),
-                                  number_vacancy=int(my_dict['number_vacancy']), sphere=str(my_dict['sphere']), country=str(my_dict['country']), city=str(my_dict['city']),
-                                  e_mail=str(my_dict['e_mail']), phone=int(my_dict['phone']), account=request.user)  # можно переопределить метод __init__
+                try:
+                    my_obj = Employer.objects.get(account=request.user)
+                except Employer.DoesNotExist:
+                    my_obj = Employer(account=request.user)
+                my_obj.name = str(my_dict['name'])
+                my_obj.number_vacancy = int(my_dict['number_vacancy'])
+                my_obj.sphere = str(my_dict['sphere'])
+                my_obj.country = str(my_dict['country'])
+                my_obj.city = str(my_dict['city'])
+                my_obj.e_mail = str(my_dict['e_mail'])  # можно переопределить метод __init__
             else:
-                my_obj = Worker(age=datetime.strptime(str(my_dict['age']), "%d.%m.%Y"), first_name=str(my_dict['first_name']), country=str(my_dict['country']), city=str(my_dict['city']),
-                                e_mail=str(my_dict['e_mail']), phone=int(my_dict['phone']), second_name=str(my_dict['second_name']),
-                                education=str(my_dict['education']), work_experience=str(my_dict['work_experience']),account=request.user)
+                try:
+                    my_obj = Worker.objects.get(account=request.user)
+                except Worker.DoesNotExist:
+                    my_obj = Worker(account=request.user)
+                my_obj.first_name = str(my_dict['first_name'])
+                my_obj.country = str(my_dict['country'])
+                my_obj.city = str(my_dict['city'])
+                my_obj.e_mail = str(my_dict['e_mail'])
+                my_obj.second_name = str(my_dict['second_name'])
+                my_obj.education = str(my_dict['education'])
+                my_obj.work_experience = str(my_dict['work_experience'])
+            if 7 <= len(my_dict['phone']) <= 16:
+                my_obj.phone = int(my_dict['phone'])
+            try:
+                if my_dict['age'] and datetime(1900, 1, 1) <= datetime.strptime(str(my_dict['age']), "%d.%m.%Y") <= datetime.now():
+                    my_obj.age = datetime.strptime(str(my_dict['age']), "%d.%m.%Y")
+            except ValueError:
+                pass  # сделать обработку
             my_obj.save()
             HttpRequest.method = 'get'
             return redirect('/home/')
