@@ -1,0 +1,40 @@
+"""CatchJob URL Configuration
+
+The `urlpatterns` list routes URLs to views. For more information please see:
+    https://docs.djangoproject.com/en/2.2/topics/http/urls/
+Examples:
+Function views
+    1. Add an import:  from my_app import views
+    2. Add a URL to urlpatterns:  path('', views.home, name='home')
+Class-based views
+    1. Add an import:  from other_app.views import Home
+    2. Add a URL to urlpatterns:  path('', Home.as_view(), name='home')
+Including another URLconf
+    1. Import the include() function: from django.urls import include, path
+    2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
+"""
+from django.contrib import admin
+from django.urls import path
+from django.conf import settings
+from django.conf.urls.static import static
+from main_app.views import MainPage, HomePage, SignIn, SignUp, UpdateProfile, LOgOut
+from vacancy.views import AllVacancy, CreateVacancy
+from resume.views import AllResume, CreateResume
+
+
+urlpatterns = [
+    path('', MainPage.as_view()),
+    path('sign-in/', SignIn.as_view()),
+    path('sign-up/', SignUp.as_view()),
+    path('log-out/', LOgOut.as_view()),
+    path('home/', HomePage.as_view()),
+    path('resume/', AllResume.as_view()),
+    path('vacancy/', AllVacancy.as_view()),
+    path('home/update-profile/', UpdateProfile.as_view()),
+    path('home/create-vac/', CreateVacancy.as_view()),
+    path('home/create-res/', CreateResume.as_view()),
+    path('admin/', admin.site.urls),
+]
+
+
+urlpatterns += static(settings.STATIC_URL)

@@ -1,0 +1,50 @@
+<!DOCTYPE HTML>
+
+    <link rel="canonical" href="https://getbootstrap.com/docs/4.5/examples/cover/">
+<html>
+    <head>
+        <meta charset='utf-8'>
+        <title>CatchJob</title>
+        {% load static %}
+        <link rel="stylesheet" href="{% static 'css/cover.css' %}">        
+        <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+        
+    </head>
+    <body class="text-center">
+        <div class="cover-container d-flex w-50 h-50 p-3 mx-auto flex-column">
+            <header class="masthead mb-auto">
+    <div class="inner">
+      <h3 class="masthead-brand">Cover</h3>
+      <nav class="nav nav-masthead justify-content-center">
+        <a class="nav-link" href="/home">Home</a>
+        <a class="nav-link" href="/sign-in">sign in</a>
+        <a class="nav-link" href="/sign-up">sign up</a>
+      </nav>
+    </div>
+  </header>
+            <h1>Welcome to CatchJob!</h1>
+            </br>
+            <p></p>
+            <Font Align=Centre>Here you can:</Font>
+            <p>For candidate:</p>
+            <ul>
+                <li>Find job</li>
+                <li>Contact the employer</li>
+                <li>Know about salary in different areas</li>
+                <li>Learn requirement of employers</li>
+            </ul>
+            </p>
+            <p>For emploer:</p>
+            <ul>
+                <li>Find workers</li>
+                <li>Read CV of candidate</li>
+                <li>Advertise your company</li>
+            <ul>
+            <div> <a href="/vacancy">Vacancies</a></div>
+            <div> <a href="/resume">Resumes</a></div>
+        </div>
+    </body>
+</html>
+
+
+
