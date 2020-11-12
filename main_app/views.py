@@ -48,16 +48,14 @@ class HomePage(View):
                 Vacancy.objects.create(title=data[1], description=data[0], create_data=datetime.now(), author=request.user)
                 return redirect('/vacancy/')
             else:
-                print(request.user)
-                my_resume = Resume.objects.get(author=request.user)
-                print(my_resume)
-                if my_resume:
-                    my_resume.title = data[1]
-                    my_resume.description = data[0]
-                    my_resume.create_data = datetime.now()
-                    my_resume.save()
-                else:
-                    Resume.objects.create(title=data[1], description=data[0], create_data=datetime.now(), author=request.user)
+                try:
+                    my_resume = Resume.objects.get(author=request.user)
+                except Resume.DoesNotExist:
+                    my_resume = Resume(author=request.user)
+                my_resume.title = data[1]
+                my_resume.description = data[0]
+                my_resume.create_data = datetime.now()
+                my_resume.save()
                 return redirect('/resume/')
         else:
             return HttpResponseBadRequest()
