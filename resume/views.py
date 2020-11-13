@@ -13,8 +13,8 @@ class AllResume(View):
             search = str(request.GET.get('q'))
         else:
             search = ""
-        resumes = Resume.objects.values()
-        return render(request, 'resume/all_resume.html', context={'resumes': Resume.objects.all()})
+        # resumes = Resume.objects.values()
+        return render(request, 'resume/all_resume.html', context={'resumes': Resume.objects.filter(title__icontains=search)})
 
     def post(self, request, *args, **kwargs):
         pass

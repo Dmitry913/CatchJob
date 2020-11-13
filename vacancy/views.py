@@ -6,7 +6,12 @@ from .models import Vacancy
 class AllVacancy(View):
 
     def get(self, request, *args, **kwargs):
-        return render(request, 'vacancy/all_vacancy.html', context={'vacancies': Vacancy.objects.all()})
+        search = None
+        if request.GET.get('q'):
+            search = str(request.GET.get('q'))
+        else:
+            search = ""
+        return render(request, 'vacancy/all_vacancy.html', context={'vacancies': Vacancy.objects.filter(title__icontains=search)})
 
     def post(self, request, *args, **kwargs):
         pass
