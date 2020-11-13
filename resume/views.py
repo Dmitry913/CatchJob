@@ -14,10 +14,6 @@ class AllResume(View):
         else:
             search = ""
         resumes = Resume.objects.values()
-        # for elem in list(serialize("json", Resume.objects.all())):
-            # print('---'+elem+'------------------')
-            # if search in elem['title']:
-            #     resumes.append(elem)
         return render(request, 'resume/all_resume.html', context={'resumes': Resume.objects.all()})
 
     def post(self, request, *args, **kwargs):

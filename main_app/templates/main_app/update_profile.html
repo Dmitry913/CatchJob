@@ -63,23 +63,35 @@
 
   <main role="main" class="inner cover">
     <h3 Align=Center class="form-signin row">
-            <form action="" method="post">{% csrf_token %}
-                {% if not employer%}
-                    <li>Name: <input type="text" name="first_name"></li>
-                    <li>Surname: <input type="text" name="second_name"></li>
-                    <li>DOB: <input type="text" name="age"></li>
-                    <li>Education: <input type="text" name="education"></li>
-                    <li>Work experience: <input type="text" name="work_experience"></li>
-                {% else %}
-                    <li>Company name: <input type="text" name="name"></li>
-                    <li>Number of vacancies: <input type="text" name="number_vacancy"></li>
-                    <li>Company foundation date: <input type="text" name="age"></li>
-                    <li>Scope of work: <input type="text" name="sphere"></li>
-                {% endif %}
-                <li>Country: <input type="text" name="country"></li>
-                <li>City: <input type="text" name="city"></li>
-                <li>E-mail: <input type="text" name="e_mail"></li>
-                <li>Phone: <input type="text" name="phone"></li>
+            <form action="" method="post">{% csrf_token %}                    
+                    {% for elem in data %}
+                    {% if not employer%}
+                            <li>Name: <input type="text" name="first_name" value="{{ elem.first_name }}"></li>
+                            <li>Surname: <input type="text" name="second_name" value="{{ elem.second_name }}"></li>
+                            <li>DOB:{%if elem.age != None%}
+                                     <input type="text" name="age" value="{{ elem.age }}">
+                                    {% else %}
+                                    <input type="text" name="age">
+                                    {% endif %}
+                            </li>
+                            <li>Education: <input type="text" name="education" value="{{ elem.education }}"></li>
+                            <li>Work experience: <input type="text" name="work_experience" value="{{ elem.work_experience }}"></li>
+                    {% else %}
+                        <li>Company name: <input type="text" name="name" value="{{ elem.name }}"></li>
+                        <li>Number of vacancies: <input type="text" name="number_vacancy" value="{{ elem.number_vacancy }}"></li>
+                        <li>Company foundation date: <input type="text" name="age" value="{{ elem.age }}"></li>
+                        <li>Scope of work: <input type="text" name="sphere" value="{{ elem.sphere }}"></li>
+                    {% endif %}
+                        <li>Country: <input type="text" name="country" value="{{ elem.country }}"></li>
+                        <li>City: <input type="text" name="city" value="{{ elem.city }}"></li>
+                        <li>E-mail: <input type="text" name="e_mail" value="{{ elem.e_mail }}"></li>
+                        <li>Phone:{%if elem.age != None%}
+                                     <input type="text" name="phone" value="{{ elem.phone }}">
+                                    {% else %}
+                                    <input type="text" name="phone">
+                                    {% endif %}
+                        </li>
+                    {% endfor %}
                 <p></p>
                 <p><button class="btn btn-lg btn-secondary" type="submit">Update</button><p>
             </form>

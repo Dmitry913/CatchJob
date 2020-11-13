@@ -18,8 +18,16 @@ from django.views.generic import CreateView
 
 from datetime import datetime
 
+
 def my_is_staff(my_user):
     return my_user.is_staff
+
+
+def check_email(string):
+    if '@' not in string:
+        return False
+    else:
+        return (' ' not in string) and ('@.' not in string) and (string.find('.', string.find('@')) != -1)
 
 
 class MainPage(TemplateView):
@@ -90,43 +98,45 @@ class UpdateProfile(View):
 
     def get(self, request, *args, **kwargs):
         if request.user.is_authenticated:
-            return render(request, 'main_app/update_profile.html', context={'employer': True if my_is_staff(request.user) else False})
-    # HttpRequest.POST.
+            if my_is_staff(request.user):
+                return render(request, 'main_app/update_profile.html',
+                              context={'employer': True, 'data': Employer.objects.filter(account=request.user)})
+            else:
+                return render(request, 'main_app/update_profile.html',
+                              context={'employer': False, 'data': Worker.objects.filter(account=request.user)})
+        else:
+            return redirect('/home/')
 
     def post(self, request, *args, **kwargs):
         if request.user.is_authenticated:
             my_dict = {key: value for key, value in request.POST.dict().items()}
             del my_dict['csrfmiddlewaretoken']
             if my_is_staff(request.user):
-                try:
-                    my_obj = Employer.objects.get(account=request.user)
-                except Employer.DoesNotExist:
-                    my_obj = Employer(account=request.user)
+                my_obj = Employer.objects.get_or_create(account=request.user)[0]
                 my_obj.name = str(my_dict['name'])
                 my_obj.number_vacancy = int(my_dict['number_vacancy'])
-                my_obj.sphere = str(my_dict['sphere'])
-                my_obj.country = str(my_dict['country'])
-                my_obj.city = str(my_dict['city'])
-                my_obj.e_mail = str(my_dict['e_mail'])  # можно переопределить метод __init__
+                my_obj.sphere = str(my_dict['sphere']) # можно переопределить метод __init__
             else:
-                try:
-                    my_obj = Worker.objects.get(account=request.user)
-                except Worker.DoesNotExist:
-                    my_obj = Worker(account=request.user)
+                my_obj = Worker.objects.get_or_create(account=request.user)[0]
                 my_obj.first_name = str(my_dict['first_name'])
-                my_obj.country = str(my_dict['country'])
-                my_obj.city = str(my_dict['city'])
-                my_obj.e_mail = str(my_dict['e_mail'])
                 my_obj.second_name = str(my_dict['second_name'])
                 my_obj.education = str(my_dict['education'])
                 my_obj.work_experience = str(my_dict['work_experience'])
+            my_obj.country = str(my_dict['country'])
+            my_obj.city = str(my_dict['city'])
+            if check_email(str(my_dict['e_mail'])):
+                my_obj.e_mail = str(my_dict['e_mail'])
+            else:
+                my_obj.e_mail = ""
             if 7 <= len(my_dict['phone']) <= 16:
                 my_obj.phone = int(my_dict['phone'])
+            else:
+                my_obj.phone = None
             try:
                 if my_dict['age'] and datetime(1900, 1, 1) <= datetime.strptime(str(my_dict['age']), "%d.%m.%Y") <= datetime.now():
                     my_obj.age = datetime.strptime(str(my_dict['age']), "%d.%m.%Y")
             except ValueError:
-                pass  # сделать обработку
+                my_obj.age = None # сделать обработку
             my_obj.save()
             HttpRequest.method = 'get'
             return redirect('/home/')
