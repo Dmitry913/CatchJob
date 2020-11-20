@@ -135,8 +135,10 @@ class UpdateProfile(View):
             try:
                 if my_dict['age'] and datetime(1900, 1, 1) <= datetime.strptime(str(my_dict['age']), "%d.%m.%Y") <= datetime.now():
                     my_obj.age = datetime.strptime(str(my_dict['age']), "%d.%m.%Y")
+                else:
+                    my_obj.age = None
             except ValueError:
-                my_obj.age = None # сделать обработку
+                my_obj.age = None  # сделать обработку
             my_obj.save()
             HttpRequest.method = 'get'
             return redirect('/home/')

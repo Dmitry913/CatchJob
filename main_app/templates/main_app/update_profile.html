@@ -85,8 +85,8 @@
                         <li>Country: <input type="text" name="country" value="{{ elem.country }}"></li>
                         <li>City: <input type="text" name="city" value="{{ elem.city }}"></li>
                         <li>E-mail: <input type="text" name="e_mail" value="{{ elem.e_mail }}"></li>
-                        <li>Phone:{%if elem.age != None%}
-                                     <input type="text" name="phone" value="{{ elem.phone }}">
+                        <li>Phone: {%if elem.phone != None %}
+                                     <input type="text" name="phone" value="{{ elem.phone }}"> 
                                     {% else %}
                                     <input type="text" name="phone">
                                     {% endif %}

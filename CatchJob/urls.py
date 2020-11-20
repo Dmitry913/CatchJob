@@ -19,7 +19,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 from main_app.views import MainPage, HomePage, SignIn, SignUp, UpdateProfile, LogOut
 from vacancy.views import AllVacancy, CreateVacancy
-from resume.views import AllResume, CreateResume
+from resume.views import AllResume, CreateResume, InfProfile
 
 
 urlpatterns = [
@@ -34,6 +34,7 @@ urlpatterns = [
     path('home/create-vac/', CreateVacancy.as_view()),
     path('home/create-res/', CreateResume.as_view()),
     path('admin/', admin.site.urls),
+    path('resume/<str:my_title>/', InfProfile.as_view()),
 ]
 
 

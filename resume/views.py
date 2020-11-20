@@ -3,6 +3,8 @@ from django.views import View
 from .models import Resume
 import json
 from django.core.serializers import serialize
+from django.http import HttpResponse
+from main_app.models import Worker
 
 
 class AllResume(View):
@@ -30,3 +32,12 @@ class CreateResume(View):
 
     def post(self, request, *args, **kwargs):
         pass
+
+
+class InfProfile(View):
+
+    def get(self, request, my_title, *args, **kwargs):
+        my_user = Resume.objects.get(title=my_title).author
+        profile = Worker.objects.filter(account=my_user)
+        return render(request, 'resume/profile_work.html', context={"data": profile,
+                                                                    "resume": Resume.objects.filter(title=my_title)})
