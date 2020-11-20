@@ -1,78 +1,36 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <title>Catch job</title>
+{% extends 'main_app/base.html' %}
 
-    <!-- Bootstrap core CSS -->
-    {% load static %}
-    <link href="{% static 'css/bootstrap.css' %}" rel="stylesheet">
-    <link rel="stylesheet" href="{% static 'css/cover.css' %}"> 
-    <style>
-      .bd-placeholder-img {
-        font-size: 1.125rem;
-        text-anchor: middle;
-        -webkit-user-select: none;
-        -moz-user-select: none;
-        -ms-user-select: none;
-        user-select: none;
-      }
 
-      @media (min-width: 768px) {
-        .bd-placeholder-img-lg {
-          font-size: 3.5rem;
-        }
-      }
-     .cover-heading {
-        margin: 1em
-    }
-    
-    .cover-container {
-        max-width: 80em;
-    }
+
+
+{% block style %}
     .form-signin {
       width: 100%;
       max-width: 500px;
       padding: 15px;
       margin: auto;
     }
-    </style>
-    <!-- Custom styles for this template -->     
-  </head>
-  <body class="text-center">
-    <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
-  <header class="masthead mb-auto">
-    <div class="inner">
-      <a href="/" class="masthead-brand btn btn-lg btn-secondary"><h3>Catch job</h3></a>
-      <nav class="nav nav-masthead justify-content-center">
-        <a class="nav-link" href="/home">Home</a>
-        <a class="nav-link active" href="/sign-in">SingIn</a>
-        <a class="nav-link" href="/sign-up">SignUp</a>        
-        <a class="nav-link" href="/log-out">LogOut</a> 
-      </nav>
-    </div>
-  </header>
+{% endblock %}
 
-  <main role="main" class="inner cover form-signin">
-    <div class="lead">
-        <form method="post" action="/sign-in/">{% csrf_token %}
-                <ul><h4>{{ form.as_table }}</h4></ul>
-                <button type="submit" class="btn btn-lg btn-secondary">Login</button>
-        </form>
-      
-  </main>
 
-    <footer class="mastfoot mt-auto">
-        <div class="inner">
-          <p>Create for computer practice. Karp Dmitry</p>
-        </div>
-      </footer>
-    </div>
+{% block link %}
+    <a class="nav-link" href="/home">Home</a>
+    <a class="nav-link active" href="/sign-in">SingIn</a>
+    <a class="nav-link" href="/sign-up">SignUp</a>        
+    <a class="nav-link" href="/log-out">LogOut</a> 
+{% endblock %}
+
+
+
+
+{% block content %}        
+<div class="lead form-signin">
+    <form method="post" action="/sign-in/">{% csrf_token %}
+            <ul><h4>{{ form.as_table }}</h4></ul>
+            <button type="submit" class="btn btn-lg btn-secondary">Login</button>
+    </form>
 </div>
-</body>
-</html>
+{% endblock %}
 
 
 

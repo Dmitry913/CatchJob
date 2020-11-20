@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <title>Catch job</title>
+
+    <!-- Bootstrap core CSS -->
+    {% load static %}
+    <link href="{% static 'css/bootstrap.css' %}" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/cover.css' %}"> 
+    <style>
+      .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+      }
+
+      @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+          font-size: 3.5rem;
+        }
+      }
+     .cover-heading {
+        margin: 1em
+    }
+    
+    .cover-container {
+        max-width: 80em;
+    }
+    .raz {
+      max-width: 14em; /* блок занимает ширину родителя, max-width её ограничивает */
+     min-height: 2em;
+     margin-left: auto;
+     margin-right: 0;
+    }
+    .resume{
+     border: 2px solid white;
+     word-wrap: break-word;
+    
+    }
+    {% block style %}
+    {% endblock%}
+    </style>
+    <!-- Custom styles for this template -->     
+  </head>
+  <body class="text-center">
+    <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
+  <header class="masthead mb-auto">
+    <div class="inner">
+      <a href="/" class="masthead-brand btn btn-lg btn-secondary"><h3>Catch job</h3></a>
+      <nav class="nav nav-masthead justify-content-center">
+        {% block link %}
+        {% endblock %}
+      </nav>
+    </div>
+  </header>
+
+  <main role="main" class="inner cover">
+    {% block content%}
+    {% endblock %}
+  </main>
+
+    <footer class="mastfoot mt-auto">
+        <div class="inner">
+          <p>Create for computer workshop. Karp Dmitry</p>
+        </div>
+      </footer>
+    </div>
+</div>
+</body>
+</html>
+
+
+
+
+

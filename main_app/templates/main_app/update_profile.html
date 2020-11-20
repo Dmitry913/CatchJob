@@ -1,124 +1,60 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <title>Catch job</title>
+{% extends 'main_app/base.html' %}
 
-    <!-- Bootstrap core CSS -->
-    {% load static %}
-    <link href="{% static 'css/bootstrap.css' %}" rel="stylesheet">
-    <link rel="stylesheet" href="{% static 'css/cover.css' %}">   
-    <style>
-      .bd-placeholder-img {
-        font-size: 1.125rem;
-        text-anchor: middle;
-        -webkit-user-select: none;
-        -moz-user-select: none;
-        -ms-user-select: none;
-        user-select: none;
-      }
 
-      @media (min-width: 768px) {
-        .bd-placeholder-img-lg {
-          font-size: 3.5rem;
-        }
-      }
-     .cover-heading {
-        margin: 2em
-    }
-    .cover-container {
-        max-width: 80em;
-    }
 
-    .raz {
-      max-width: 14em; /* блок занимает ширину родителя, max-width её ограничивает */
-     min-height: 2em;
-     margin-left: auto;
-     margin-right: 0;
-    }
+{% block style %}
     .form-signin {
       width: 100%;
       max-width: 500px;
       padding: 20px;
       margin: auto;
     }
-    </style>
-    <!-- Custom styles for this template -->     
-  </head>
-  <body class="text-center">
-    <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
-  <header class="masthead mb-auto">
-    <div class="inner">
-        <a href="/" class="masthead-brand btn btn-lg btn-secondary"><h3>Catch job</h3></a>
-      <nav class="nav nav-masthead justify-content-center">
-        <a class="nav-link" href="/home">Home</a>
-        <a class="nav-link" href="/sign-in">SingIn</a>
-        <a class="nav-link" href="/sign-up">SignUp</a>
-        <a class="nav-link" href="/log-out">LogOut</a> 
-      </nav>
-    </div>
-  </header>
+{% endblock %}
+    
 
-  <main role="main" class="inner cover">
-    <h3 Align=Center class="form-signin row">
-            <form action="" method="post">{% csrf_token %}                    
-                    {% for elem in data %}
-                    {% if not employer%}
-                            <li>Name: <input type="text" name="first_name" value="{{ elem.first_name }}"></li>
-                            <li>Surname: <input type="text" name="second_name" value="{{ elem.second_name }}"></li>
-                            <li>DOB:{%if elem.age != None%}
-                                     <input type="text" name="age" value="{{ elem.age }}">
-                                    {% else %}
-                                    <input type="text" name="age">
-                                    {% endif %}
-                            </li>
-                            <li>Education: <input type="text" name="education" value="{{ elem.education }}"></li>
-                            <li>Work experience: <input type="text" name="work_experience" value="{{ elem.work_experience }}"></li>
-                    {% else %}
-                        <li>Company name: <input type="text" name="name" value="{{ elem.name }}"></li>
-                        <li>Number of vacancies: <input type="text" name="number_vacancy" value="{{ elem.number_vacancy }}"></li>
-                        <li>Company foundation date: <input type="text" name="age" value="{{ elem.age }}"></li>
-                        <li>Scope of work: <input type="text" name="sphere" value="{{ elem.sphere }}"></li>
-                    {% endif %}
-                        <li>Country: <input type="text" name="country" value="{{ elem.country }}"></li>
-                        <li>City: <input type="text" name="city" value="{{ elem.city }}"></li>
-                        <li>E-mail: <input type="text" name="e_mail" value="{{ elem.e_mail }}"></li>
-                        <li>Phone: {%if elem.phone != None %}
-                                     <input type="text" name="phone" value="{{ elem.phone }}"> 
-                                    {% else %}
-                                    <input type="text" name="phone">
-                                    {% endif %}
+
+
+{% block link %}
+    <a class="nav-link" href="/home">Home</a>
+    <a class="nav-link" href="/sign-in">SingIn</a>
+    <a class="nav-link" href="/sign-up">SignUp</a>
+    <a class="nav-link" href="/log-out">LogOut</a> 
+{% endblock %}
+
+
+{% block content %}
+<h3 Align=Center class="form-signin row">
+        <form action="" method="post">{% csrf_token %}                    
+                {% for elem in data %}
+                {% if not employer%}
+                        <li>Name: <input type="text" name="first_name" value="{{ elem.first_name }}"></li>
+                        <li>Surname: <input type="text" name="second_name" value="{{ elem.second_name }}"></li>
+                        <li>DOB:{%if elem.age != None%}
+                                 <input type="text" name="age" value="{{ elem.age }}">
+                                {% else %}
+                                <input type="text" name="age">
+                                {% endif %}
                         </li>
-                    {% endfor %}
-                <p></p>
-                <p><button class="btn btn-lg btn-secondary" type="submit">Update</button><p>
-            </form>
-        </h3>        
-  </main>
-
-    <footer class="mastfoot mt-auto">
-        <div class="inner">
-          <p>Create for computer practice. Karp Dmitry</p>
-        </div>
-      </footer>
-    </div>
-</div>
-</body>
-</html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+                        <li>Education: <input type="text" name="education" value="{{ elem.education }}"></li>
+                        <li>Work experience: <input type="text" name="work_experience" value="{{ elem.work_experience }}"></li>
+                {% else %}
+                    <li>Company name: <input type="text" name="name" value="{{ elem.name }}"></li>
+                    <li>Number of vacancies: <input type="text" name="number_vacancy" value="{{ elem.number_vacancy }}"></li>
+                    <li>Company foundation date: <input type="text" name="age" value="{{ elem.age }}"></li>
+                    <li>Scope of work: <input type="text" name="sphere" value="{{ elem.sphere }}"></li>
+                {% endif %}
+                    <li>Country: <input type="text" name="country" value="{{ elem.country }}"></li>
+                    <li>City: <input type="text" name="city" value="{{ elem.city }}"></li>
+                    <li>E-mail: <input type="text" name="e_mail" value="{{ elem.e_mail }}"></li>
+                    <li>Phone: {%if elem.phone != None %}
+                                 <input type="text" name="phone" value="{{ elem.phone }}"> 
+                                {% else %}
+                                <input type="text" name="phone">
+                                {% endif %}
+                    </li>
+                {% endfor %}
+            <p></p>
+            <p><button class="btn btn-lg btn-secondary" type="submit">Update</button><p>
+        </form>
+    </h3>       
+{% endblock %} 

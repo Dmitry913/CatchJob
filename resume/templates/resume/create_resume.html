@@ -1,44 +1,8 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <title>Catch job</title>
+{% extends 'main_app/base.html' %}
 
-    <!-- Bootstrap core CSS -->
-    {% load static %}
-    <link href="{% static 'css/bootstrap.css' %}" rel="stylesheet">
-    <link rel="stylesheet" href="{% static 'css/cover.css' %}">   
-    <style>
-      .bd-placeholder-img {
-        font-size: 1.125rem;
-        text-anchor: middle;
-        -webkit-user-select: none;
-        -moz-user-select: none;
-        -ms-user-select: none;
-        user-select: none;
-      }
 
-      @media (min-width: 768px) {
-        .bd-placeholder-img-lg {
-          font-size: 3.5rem;
-        }
-      }
-     .cover-heading {
-        margin: 2em
-    }
-    .cover-container {
-        max-width: 80em;
-    }
 
-    .raz {
-      max-width: 14em; /* блок занимает ширину родителя, max-width её ограничивает */
-     min-height: 2em;
-     margin-left: auto;
-     margin-right: 0;
-     padding: 5px;
-    }
+{% block style %}
     .form-signin {
       width: 100%;
       max-width: 500px;
@@ -51,44 +15,34 @@
     font-size: 1.5em; /* Размер шрифта */
     word-wrap: break-word;
     }
-    </style>
-    <!-- Custom styles for this template -->     
-  </head>
-  <body class="text-center">
-    <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
-  <header class="masthead mb-auto">
-    <div class="inner">
-        <a href="/" class="masthead-brand btn btn-lg btn-secondary"><h3>Catch job</h3></a>
-      <nav class="nav nav-masthead justify-content-center">
-        <a class="nav-link" href="/home">Home</a>
-        <a class="nav-link" href="/sign-in">SingIn</a>
-        <a class="nav-link" href="/sign-up">SignUp</a>
-        <a class="nav-link" href="/log-out">LogOut</a>
-      </nav>
-    </div>
-  </header>
+{% endblock %}
 
-  <main role="main" class="inner cover">
-    <h3 Align=Center class="form-signin row">
-            <form action="/home/" method="post">{% csrf_token %}
-            <p>Title<p>
-            <input type="text" name="title">
-            <p>Description your resume</p>
-            <div class="input-group">
-              <textarea class="form-control" aria-label="With textarea" name="description"></textarea>
-            </div>
-            <p><button type="submit">Create</button><p>
-        </form>
-        </h3>        
-  </main>
 
-    <footer class="mastfoot mt-auto">
-        <div class="inner">
-          <p>Create for computer practice. Karp Dmitry</p>
+
+
+
+{% block link %}
+    <a class="nav-link" href="/home">Home</a>
+    <a class="nav-link" href="/sign-in">SingIn</a>
+    <a class="nav-link" href="/sign-up">SignUp</a>
+    <a class="nav-link" href="/log-out">LogOut</a>
+{% endblock %}
+
+
+
+
+
+
+{% block content %}
+<h3 Align=Center class="form-signin row">
+        <form action="/home/" method="post">{% csrf_token %}
+        <p>Title<p>
+        <input type="text" name="title">
+        <p>Description your resume</p>
+        <div class="input-group">
+          <textarea class="form-control" aria-label="With textarea" name="description"></textarea>
         </div>
-      </footer>
-    </div>
-</div>
-</body>
-</html>
-
+        <p><button type="submit">Create</button><p>
+    </form>
+    </h3>        
+{% endblock %}
